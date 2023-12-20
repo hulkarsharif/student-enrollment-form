@@ -7,17 +7,19 @@ generator client {
     provider = "prisma-client-js"
 }
 
-type ClassName {
-    id   String
-    name String
+enum ClassName {
+    ALGEBRA
+    GEOMETRY
+    JOURNALISM
+    LITERATURE
 }
 
 model Student {
-    id        String      @id @default(auto()) @map("_id") @db.ObjectId
+    id        String    @id @default(auto()) @map("_id") @db.ObjectId
     firstName String
     lastName  String
-    email     String      @unique
-    className ClassName[]
-    createdAt DateTime    @default(now())
-    updatedAt DateTime    @updatedAt
+    email     String    @unique
+    className ClassName
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
 }
