@@ -42,7 +42,7 @@ app.post("/students", async (req, res) => {
     }
 });
 
-app.get("/students/", async (_, res) => {
+app.get("/students/", async (req, res) => {
     try {
         const students = await prisma.student.findMany({
             select: {
