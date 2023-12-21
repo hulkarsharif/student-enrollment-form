@@ -72,7 +72,7 @@ app.get("/students/:id", async (req, res) => {
 
         const student = await prisma.student.findUnique({
             where: {
-                id
+                id: id
             }
         });
 
