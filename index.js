@@ -21,7 +21,6 @@ app.post("/students", async (req, res) => {
 
         return;
     }
-    console.log("hello");
 
     try {
         const student = await prisma.student.create({
@@ -84,7 +83,7 @@ app.get("/students/:id", async (req, res) => {
             return;
         }
 
-        res.status(201).json({ data: updateStudent });
+        res.status(201).json({ data: student });
     } catch (err) {
         res.status(500).json({
             message: err.message
@@ -151,7 +150,7 @@ app.delete("/students/:id", async (req, res) => {
 
         await prisma.student.delete({
             where: {
-                id
+                id: id
             }
         });
 
