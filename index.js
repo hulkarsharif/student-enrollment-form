@@ -21,6 +21,7 @@ app.post("/students", async (req, res) => {
 
         return;
     }
+    console.log("hello");
 
     try {
         const student = await prisma.student.create({
@@ -110,7 +111,7 @@ app.patch("/students/:id", async (req, res) => {
             });
         }
 
-        const updateStudent = await prisma.student.delete({
+        const updateStudent = await prisma.student.update({
             where: {
                 id: id
             },
