@@ -110,7 +110,7 @@ app.patch("/students/:id", async (req, res) => {
             });
         }
 
-        const updateStudent = await prisma.student.update({
+        const updatedStudent = await prisma.student.update({
             where: {
                 id: id
             },
@@ -122,7 +122,7 @@ app.patch("/students/:id", async (req, res) => {
             }
         });
 
-        res.status(201).json({ data: updateStudent });
+        res.status(201).json({ data: updatedStudent });
     } catch (err) {
         res.status(500).json({
             message: err.message
@@ -137,7 +137,7 @@ app.delete("/students/:id", async (req, res) => {
     try {
         const student = await prisma.student.findUnique({
             where: {
-                id
+                id: id
             }
         });
 
