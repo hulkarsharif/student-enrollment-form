@@ -7,7 +7,7 @@ generator client {
     provider = "prisma-client-js"
 }
 
-enum ClassName {
+enum Subjects {
     ALGEBRA
     GEOMETRY
     JOURNALISM
@@ -15,11 +15,9 @@ enum ClassName {
 }
 
 model Student {
-    id        String    @id @default(auto()) @map("_id") @db.ObjectId
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
     firstName String
     lastName  String
-    email     String    @unique
-    className ClassName
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
+    email     String
+    className Subjects
 }

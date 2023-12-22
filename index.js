@@ -1,7 +1,8 @@
 import express from "express";
-import { prisma } from "./src/prisma/index.js";
 import dotenv from "dotenv";
 import cors from "cors";
+import { prisma } from "./src/prisma/index.js";
+
 dotenv.config();
 
 const app = express();
@@ -16,9 +17,8 @@ app.post("/students", async (req, res) => {
     } = req;
     if (!firstName || !lastName || !email || !className) {
         res.status(400).json({
-            message: "All fields are required"
+            message: "All fields are required!"
         });
-
         return;
     }
 
@@ -36,13 +36,11 @@ app.post("/students", async (req, res) => {
             data: student
         });
     } catch (err) {
-        res.status(500).json({
-            message: err.message
-        });
+        res.status(500).json({ message: err.message });
     }
 });
 
-app.get("/students/", async (req, res) => {
+app.get("/students", async (req, res) => {
     try {
         const students = await prisma.student.findMany({
             select: {
@@ -58,9 +56,7 @@ app.get("/students/", async (req, res) => {
             data: students
         });
     } catch (err) {
-        res.status(500).json({
-            message: err.message
-        });
+        res.status(500).json({ message: err.message });
     }
 });
 
@@ -69,7 +65,6 @@ app.get("/students/:id", async (req, res) => {
         const {
             params: { id }
         } = req;
-
         const student = await prisma.student.findUnique({
             where: {
                 id: id
@@ -78,12 +73,14 @@ app.get("/students/:id", async (req, res) => {
 
         if (!student) {
             res.status(404).json({
-                message: `Student with ID ${id} is not found`
+                message: `Student with ID ${id} not found.`
             });
             return;
         }
 
-        res.status(201).json({ data: student });
+        res.status(201).json({
+            data: student
+        });
     } catch (err) {
         res.status(500).json({
             message: err.message
@@ -108,8 +105,8 @@ app.patch("/students/:id", async (req, res) => {
             res.status(404).json({
                 message: "Student is not found"
             });
+            return;
         }
-
         const updatedStudent = await prisma.student.update({
             where: {
                 id: id
@@ -122,7 +119,9 @@ app.patch("/students/:id", async (req, res) => {
             }
         });
 
-        res.status(201).json({ data: updatedStudent });
+        res.status(201).json({
+            data: updatedStudent
+        });
     } catch (err) {
         res.status(500).json({
             message: err.message
@@ -134,13 +133,13 @@ app.delete("/students/:id", async (req, res) => {
     const {
         params: { id }
     } = req;
+
     try {
         const student = await prisma.student.findUnique({
             where: {
                 id: id
             }
         });
-
         if (!student) {
             res.status(404).json({
                 message: "Student is not found"
@@ -163,5 +162,5 @@ app.delete("/students/:id", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log("Server is running", PORT);
+    console.log("Server is running on ", PORT);
 });
